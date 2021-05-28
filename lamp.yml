@@ -78,7 +78,7 @@
                group: apache
           - name: Copy wordpress file to /var/www/html
             copy:
-               src: /opt/wordpress/
+               src: /tmp/wordpress/
                dest: /var/www/html
                owner: apache
                group: apache
@@ -88,20 +88,12 @@
           - name: Configure database connection
             command: "{{ item }}"
             with_items:
-                    #              - mkdir /var/www/html/wp-content/uploads
               - cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
               - sed -i "s/^define( 'DB_NAME',.*/define( 'DB_NAME', 'webserver' );/" /var/www/html/wp-config.php
               - sed -i "s/^define( 'DB_USER',.*/define( 'DB_USER', 'oracle' );/" /var/www/html/wp-config.php
               - sed -i "s/^define( 'DB_PASSWORD',.*/define( 'DB_PASSWORD', 'school1' );/" /var/www/html/wp-config.php
             notify:
               - restart apache
-          - name: Set permission on /var/www/html directory
-            file:
-               dest: /var/www/html
-               owner: apache
-               group: apache
-               mode: u=rwX,g=rX,o=rX
-               recurse: yes
   handlers:
     - name: restart apache
       service:
