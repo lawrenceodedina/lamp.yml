@@ -72,7 +72,7 @@
           - name: Install wordpress
             unarchive:
                src: https://wordpress.org/wordpress-5.1.1.tar.gz
-               dest: /opt
+               dest: /tmp
                remote_src: yes
                owner: apache
                group: apache
